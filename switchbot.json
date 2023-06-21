@@ -1,0 +1,13 @@
+{
+  "token":"XXXXXXXXXXXX",
+  "secret":"XXXXXX",
+  "blinds":[
+    "XXXX"
+  ],
+  "hubs":[
+    "XXXX"
+  ],
+  "acs":[
+    "X-XXXX-XXXX"
+  ]
+}
