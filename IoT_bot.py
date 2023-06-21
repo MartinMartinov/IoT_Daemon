@@ -34,7 +34,7 @@ TEMP_THRESH    = 22 # Dry bulb temperature threshold for AC in celsius
 last_day     = None
 alarm_hour   = 25
 alarm_minute = 61
-blind_state  = ""
+blind_state  = "close"
 ac_state     = "off"
 ac_count     = 0
 
@@ -78,6 +78,7 @@ def set_todays_alarms():
         return 24, 1
 
 def close_blinds():
+    global blind_state
     switch = switchBot()
     try:
         switch.connect()
@@ -87,6 +88,7 @@ def close_blinds():
         pass # Hope it works next time
 
 def open_blinds():
+    global blind_state
     switch = switchBot()
     try:
         switch.connect()
