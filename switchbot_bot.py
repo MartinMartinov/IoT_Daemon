@@ -14,7 +14,7 @@ import requests
 class switchBot():
     def connect(self):
         # Set up SwitchBot device
-        inputs = json.load(open("/home/martinov/IoT/switchbot.json"))
+        inputs = json.load(open("/home/martinov/IoT_Daemon/switchbot.json"))
         token  = inputs['token']
         secret = inputs['secret']
         self.blinds = inputs['blinds']

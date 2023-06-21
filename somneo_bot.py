@@ -8,7 +8,7 @@ from math import atan
 class somneoLight():
     def connect(self):
         urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-        inputs = json.load(open("/home/martinov/IoT/somneo.json"))
+        inputs = json.load(open("/home/martinov/IoT_Daemon/somneo.json"))
         self.host = inputs['IP']
         
         url  = "https://" + self.host + "/upnp/description.xml"

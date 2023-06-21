@@ -13,7 +13,7 @@ import os
 class GoogleCal():
     def __init__(self):
         self.SCOPES             = "https://www.googleapis.com/auth/calendar.readonly"
-        self.CLIENT_SECRET_FILE = "/home/martinov/IoT/client_secret_google_calendar.json"
+        self.CLIENT_SECRET_FILE = "/home/martinov/IoT_Daemon/client_secret_google_calendar.json"
         self.APPLICATION_NAME   = "Google Calendar - Raw Python"
 
     def get_credentials(self):
