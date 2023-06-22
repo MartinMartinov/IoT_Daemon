@@ -19,10 +19,10 @@ def blue(string):
     return "\033[94m"+string+"\033[0m"
 
 # Settings for alarms
-WORK_TRAVEL_TIME      = 75  # minutes
-WORK_BIKE_TRAVEL_TIME = 100 # minutes
-WORK_BIKE_TEMP_THRESH = 12  # minutes
 BIKE_WEATHER          = ["sunny", "cloudy"]  # Google weather results
+WORK_TRAVEL_TIME      = 75  # minutes
+WORK_BIKE_TRAVEL_TIME = 90  # minutes
+WORK_BIKE_TEMP_THRESH = 12  # minutes
 BLINDS_CLOSE_HOUR     = 23  # hours
 CHECK_INTERVAL        = 600 # seconds
 
@@ -58,9 +58,12 @@ def set_todays_alarms():
             weather = get_weather_data()
             outside = weather['next_days'][0]['weather'].split(" ")[-1].lower()
             lows    = weather['next_days'][0]['min_temp']
-            if outside in BIKE_WEATHER and lows > WORK_BIKE_TEMP_THRESH:
+            print(f"We have {yellow(weather['next_days'][0]['weather'])} with a low of {blue(lows)}")
+            if outside in BIKE_WEATHER and int(lows) > WORK_BIKE_TEMP_THRESH:
+                print(f"Giving {red(str(WORK_BIKE_TRAVEL_TIME))} minute bike riding time.")
                 time = time - datetime.timedelta(minutes=WORK_BIKE_TRAVEL_TIME)
             else:
+                print(f"Giving {red(str(WORK_TRAVEL_TIME))} minute car travel time.")
                 time = time - datetime.timedelta(minutes=WORK_TRAVEL_TIME)
         print(f"Setting alarms for {red(format(time.hour,'02d'))}:{red(format(time.minute,'02d'))}")
 
