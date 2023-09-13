@@ -63,8 +63,8 @@ class somneoLight():
         settings['amnth'] = 0
         settings['alday'] = 0
         settings['daynm'] = 0 # First seven bits are the 7 days of the week
-        settings['almhr'] = hour
-        settings['almmn'] = minute
+        settings['almhr'] = 0
+        settings['almmn'] = 0
         settings['ctype'] = 0 # Light curve type: sunny day (0), island red (1), nordic white (2)
         settings['curve'] = 25 # Light level (0 - 25, 0 is no light)
         settings['durat'] = 5 # Duration in minutes (5 - 40)
