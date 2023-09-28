@@ -11,11 +11,11 @@ import time
 import ssl
 
 # Colours
-def red(string):
+def red(string: str):
     return "\033[91m"+string+"\033[0m"
-def yellow(string):
+def yellow(string: str):
     return "\033[93m"+string+"\033[0m"
-def blue(string):
+def blue(string: str):
     return "\033[94m"+string+"\033[0m"
 
 # Settings for alarms
@@ -27,7 +27,7 @@ BLINDS_CLOSE_HOUR     = 23  # hours
 CHECK_INTERVAL        = 600 # seconds
 
 # Settings for AC
-WB_TEMP_THRESH = 14 # Wet bulb temperature threshold for AC in celsius
+WB_TEMP_THRESH = 16 # Wet bulb temperature threshold for AC in celsius
 TEMP_THRESH    = 22 # Dry bulb temperature threshold for AC in celsius
 
 # Variables
@@ -107,16 +107,17 @@ def check_AC():
     # Get wet bulb temperature
     somneo = somneoLight()
     somneo.connect()
-    #temp = somneo.get_wt_temperature()
     try:
-        temp = somneo.get_temperature()
-        print(f"Temperature is {blue(format(temp,'2.2f'))} degrees at {red(format(now.hour,'02d'))}:{red(format(now.minute,'02d'))}")
+        temp = somneo.get_wt_temperature(); check_temp = WB_TEMP_THRESH
+        print(f"Wet bulb temperature is {blue(format(temp,'2.2f'))} degrees at {red(format(now.hour,'02d'))}:{red(format(now.minute,'02d'))}")
+        #temp = somneo.get_temperature(); check_temp = TEMP_THRESH
+        #print(f"Temperature is {blue(format(temp,'2.2f'))} degrees at {red(format(now.hour,'02d'))}:{red(format(now.minute,'02d'))}")
     except ssl.SSLEOFError:
         print(f"Failed to connect at {red(format(now.hour,'02d'))}:{red(format(now.minute,'02d'))}, assuming same temperature")
     
     # Check if the AC is needed, if so, turn it on
-    if TEMP_THRESH < temp and ac_state != "on":
-        print(f"{blue(format(temp,'2.2f'))} is above {blue(format(TEMP_THRESH,'2f'))} at {red(format(now.hour,'02d'))}:{red(format(now.minute,'02d'))}, starting up AC")
+    if check_temp < temp and ac_state != "on":
+        print(f"{blue(format(temp,'2.2f'))} is above {blue(format(check_temp,'2f'))} at {red(format(now.hour,'02d'))}:{red(format(now.minute,'02d'))}, starting up AC")
         switch = switchBot()
         try:
             switch.connect()
@@ -125,14 +126,14 @@ def check_AC():
             ac_count = 0
         except HttpAccessTokenRefreshError:
             pass # Hope it works next time
-    elif TEMP_THRESH < temp and ac_state != "off" and ac_count:
-        print(f"{blue(format(temp,'2.2f'))} is above {blue(format(TEMP_THRESH,'2f'))}, resetting cycle count")
+    elif check_temp < temp and ac_state != "off" and ac_count:
+        print(f"{blue(format(temp,'2.2f'))} is above {blue(format(check_temp,'2f'))}, resetting cycle count")
         ac_count = 0
-    elif TEMP_THRESH > temp and ac_count < 3 and ac_state != "off":
-        print(f"{blue(format(temp,'2.2f'))} is below {blue(format(TEMP_THRESH,'2f'))} counting {yellow(3-ac_count)} more cycles before turning off AC")
+    elif check_temp > temp and ac_count < 3 and ac_state != "off":
+        print(f"{blue(format(temp,'2.2f'))} is below {blue(format(check_temp,'2f'))} counting {yellow(format(3-ac_count),'0d')} more cycles before turning off AC")
         ac_count = ac_count + 1
-    elif TEMP_THRESH > temp and ac_state != "off":
-        print(f"{blue(format(temp,'2.2f'))} is below {blue(format(TEMP_THRESH,'2f'))}, turning off AC")
+    elif check_temp > temp and ac_state != "off":
+        print(f"{blue(format(temp,'2.2f'))} is below {blue(format(check_temp,'2f'))}, turning off AC")
         switch = switchBot()
         try:
             switch.connect()

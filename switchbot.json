@@ -1,13 +1,13 @@
 {
-  "token":"XXXXXXXXXXXX",
-  "secret":"XXXXXX",
+  "token":"42644458dfa17bbc21e4fba25ced96403a5f30ce9311ba4826a174861bb0fe2e09f9441b8fb115514f97dc457046fd47",
+  "secret":"ef45614d52da4d6b9bd3b50db127887b",
   "blinds":[
-    "XXXX"
+    "C1C149348EDC"
   ],
   "hubs":[
-    "XXXX"
+    "D77F5FFAB8BD"
   ],
   "acs":[
-    "X-XXXX-XXXX"
+    "01-202305141832-06045225"
   ]
 }
